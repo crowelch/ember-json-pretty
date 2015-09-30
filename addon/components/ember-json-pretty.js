@@ -284,7 +284,7 @@ var _createJSONTree = function(obj, numberSpaces, options, hasComma) {
         obj.forEach(function(newObj, index){
             var newObject;
 
-            if(typeof newObj === 'string')
+            if(typeof newObj === 'string' || typeof newObj === 'number')
             {
                 var internalJsonLine = {
                     elements: [],
@@ -297,9 +297,15 @@ var _createJSONTree = function(obj, numberSpaces, options, hasComma) {
                 internaljsonObj.plusId = '';
                 internaljsonObj.element = newObj;
                 internaljsonObj.isBlank = false;
-                internaljsonObj.style = 'color:' + options['stringColor'] + '; background-color:' + options['stringHighlight'];
-                internaljsonObj.class = 'json-string';
-
+                if(typeof newObj === 'string')
+                {
+                    internaljsonObj.style = 'color:' + options['stringColor'] + '; background-color:' + options['stringHighlight'];
+                    internaljsonObj.class = 'json-string';
+                }
+                else {
+                    internaljsonObj.style = 'color:' + options['valueColor'] + '; background-color:' + options['valueHighlight'];
+                    internaljsonObj.class = 'json-value';
+                }
                 for(var counter = 0; counter < internalBlanks; counter = counter +1){
                     internalJsonLine.elements.push(_addBlank());
                 }
