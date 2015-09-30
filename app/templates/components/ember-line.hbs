@@ -1,4 +1,4 @@
-{{#each element in line.elements}}
+{{#each line.elements as |element|}}
     {{#if element.hasPlus}}
         <i id={{element.plusId}} class="fa fa-minus-square-o plus-icon" {{action 'toggleExpand' element.plusId}}></i>
     {{/if}}
@@ -13,7 +13,7 @@
         </span>
     {{/unless}}
 {{/each}}
-{{#each line in line.lines}}
+{{#each line.lines as |line|}}
     <div data-id={{line.plusId }} class="new-line">
         {{partial 'components/ember-line'}}
     </div>
