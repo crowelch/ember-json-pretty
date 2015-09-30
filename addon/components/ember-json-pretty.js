@@ -17,7 +17,11 @@ var _addBrace = function(element, numberSpaces, hasPlus, braceColor, braceHighli
     jsonObj.plusId = 'plus_' + plusId;
     jsonObj.isBlank = false;
     jsonObj.element = element;
-    jsonObj.style = 'color:' + braceColor + '; background-color:' + braceHighlight;
+    if(braceColor || braceHighlight) {
+        jsonObj.style = '';
+        if(braceColor) { jsonObj.style += 'color:' + braceColor + '; '; }
+        if(braceHighlight) { jsonObj.style += 'background-color:' + braceHighlight + '; '; }
+    }
     jsonObj.class = 'json-brace';
 
     jsonLine.elements.push(jsonObj);
@@ -32,7 +36,6 @@ var _addBlank = function(){
     jsonObj.plusId = null;
     jsonObj.element = '';
     jsonObj.isBlank = true;
-    jsonObj.style = '';
     jsonObj.class = 'json-blank';
 
     return jsonObj;
@@ -45,7 +48,11 @@ var _addKey = function(key, numberSpaces, keyColor, keyHighlight){
     jsonObj.plusId = null;
     jsonObj.isBlank = false;
     jsonObj.element = key;
-    jsonObj.style = 'color:' + keyColor + '; background-color:' + keyHighlight;
+    if(keyColor || keyHighlight) {
+        jsonObj.style = '';
+        if(keyColor) { jsonObj.style += 'color:' + keyColor + '; '; }
+        if(keyHighlight) { jsonObj.style += 'background-color:' + keyHighlight + '; '; }
+    }
     jsonObj.class = 'json-key';
 
     return jsonObj;
@@ -101,7 +108,11 @@ var _addStringValue = function(value, stringColor, stringHighlight){
     jsonObj.plusId = null;
     jsonObj.isBlank = false;
     jsonObj.element = value;
-    jsonObj.style = 'color:' + stringColor + '; background-color:' + stringHighlight;
+    if(stringColor || stringHighlight) {
+        jsonObj.style = '';
+        if(stringColor) { jsonObj.style += 'color:' + stringColor + '; '; }
+        if(stringHighlight) { jsonObj.style += 'background-color:' + stringHighlight + '; '; }
+    }
     jsonObj.class = 'json-string';
 
     return jsonObj;
@@ -118,7 +129,11 @@ var _addStandardValue = function(value, valueColor, valueHighlight){
     jsonObj.plusId = null;
     jsonObj.isBlank = false;
     jsonObj.element = value;
-    jsonObj.style = 'color:' + valueColor + '; background-color:' + valueHighlight;
+    if(valueColor || valueHighlight) {
+        jsonObj.style = '';
+        if(valueColor) { jsonObj.style += 'color:' + valueColor + '; '; }
+        if(valueHighlight) { jsonObj.style += 'background-color:' + valueHighlight + '; '; }
+    }
     jsonObj.class = 'json-value';
 
     return jsonObj;
@@ -131,7 +146,6 @@ var _addComma = function(){
     jsonObj.plusId = null;
     jsonObj.isBlank = false;
     jsonObj.element = ',';
-    jsonObj.style = '';
     jsonObj.class = '';
 
     return jsonObj;
@@ -276,7 +290,11 @@ var _createJSONTree = function(obj, numberSpaces, options, hasComma) {
         jsonObj.plusId = 'plus_' + plusId;
         jsonObj.element = '[';
         jsonObj.isBlank = false;
-        jsonObj.style = 'color:' + options['bracketColor'] + '; background-color:' + options['bracketHighlight'];
+        if(options['bracketColor'] || options['bracketHighlight']) {
+            jsonObj.style = '';
+            if(options['bracketColor']) { jsonObj.style += 'color:' + options['bracketColor'] + '; '; }
+            if(options['bracketHighlight']) { jsonObj.style += 'background-color:' + options['bracketHighlight'] + '; '; }
+        }
         jsonObj.class = 'json-bracket';
 
         jsonLine.elements.push(jsonObj);
@@ -299,11 +317,19 @@ var _createJSONTree = function(obj, numberSpaces, options, hasComma) {
                 internaljsonObj.isBlank = false;
                 if(typeof newObj === 'string')
                 {
-                    internaljsonObj.style = 'color:' + options['stringColor'] + '; background-color:' + options['stringHighlight'];
+                    if(options['stringColor'] || options['stringHighlight']) {
+                        internaljsonObj.style = '';
+                        if(options['stringColor']) { internaljsonObj.style += 'color:' + options['stringColor'] + '; '; }
+                        if(options['stringHighlight']) { internaljsonObj.style += 'background-color:' + options['stringHighlight'] + '; '; }
+                    }
                     internaljsonObj.class = 'json-string';
                 }
                 else {
-                    internaljsonObj.style = 'color:' + options['valueColor'] + '; background-color:' + options['valueHighlight'];
+                    if(options['valueColor'] || options['valueHighlight']) {
+                        internaljsonObj.style = '';
+                        if(options['valueColor']) { internaljsonObj.style += 'color:' + options['valueColor'] + '; '; }
+                        if(options['valueHighlight']) { internaljsonObj.style += 'background-color:' + options['valueHighlight'] + '; '; }
+                    }
                     internaljsonObj.class = 'json-value';
                 }
                 for(var counter = 0; counter < internalBlanks; counter = counter +1){
@@ -358,7 +384,11 @@ var _createJSONTree = function(obj, numberSpaces, options, hasComma) {
         jsonObj.plusId = null;
         jsonObj.element = ']';
         jsonObj.isBlank = false;
-        jsonObj.style = 'color:' + options['bracketColor'] + '; background-color:' + options['bracketHighlight'];
+        if(options['bracketColor'] || options['bracketHighlight']) {
+            jsonObj.style = '';
+            if(options['bracketColor']) { jsonObj.style += 'color:' + options['bracketColor'] + '; '; }
+            if(options['bracketHighlight']) { jsonObj.style += 'background-color:' + options['bracketHighlight'] + '; '; }
+        }
         jsonObj.class = 'json-bracket';
 
         jsonLine.elements.push(jsonObj);
@@ -386,16 +416,6 @@ var _prettyPrint = function(obj, options) {
 export default Ember.Component.extend({
     tagName: 'code',
     optionsDefault: {
-        keyColor: '#A52A2A',
-        keyHighlight: '#FFFFFF',
-        valueColor: '#000080',
-        valueHighlight: '#FFFFFF',
-        stringColor: '#C0FF3E',
-        stringHighlight: '#FFFFFF',
-        braceColor: '#000000',
-        braceHighlight: '#FFFFFF',
-        bracketColor: '#000000',
-        bracketHighlight: '#FFFFFF'
     },
     options: {},
     id: '',
