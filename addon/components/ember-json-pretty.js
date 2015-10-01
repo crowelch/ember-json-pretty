@@ -74,7 +74,7 @@ var _addTwoPoints = function(){
 var _addValue = function(value, numberSpaces, hasComma, options){
     var jsonObj = {};
 
-    if(value){
+    if(value || value === false){
         if(typeof value === 'string'){
             jsonObj = _addStringValue(value, options['stringColor'], options['stringHighlight']);
         }
@@ -95,7 +95,7 @@ var _addValue = function(value, numberSpaces, hasComma, options){
         }
     }
     else{
-        jsonObj = _addStringValue('null', options['stringColor'], options['stringHighlight']);
+        jsonObj = _addStandardValue('null', options['valueColor'], options['valueHighlight']);
     }
 
     return jsonObj;
@@ -302,7 +302,7 @@ var _createJSONTree = function(obj, numberSpaces, options, hasComma) {
         obj.forEach(function(newObj, index){
             var newObject;
 
-            if(typeof newObj === 'string' || typeof newObj === 'number')
+            if(typeof newObj === 'string' || typeof newObj === 'number' || typeof newObj === 'boolean')
             {
                 var internalJsonLine = {
                     elements: [],
